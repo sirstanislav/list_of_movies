@@ -1,17 +1,21 @@
 class Api {
-  baseUrl: string;
+  nowPlaying: string;
+  topRated: string;
   headers: string;
   pageNumber: string;
+  url: string;
 
-  constructor({ baseUrl, headers, pageNumber }: any) {
-    this.baseUrl = baseUrl;
+  constructor({ nowPlaying, topRated, headers, pageNumber, url }: any) {
+    this.nowPlaying = nowPlaying;
+    this.topRated = topRated;
     this.headers = headers;
     this.pageNumber = pageNumber;
+    this.url = url
   }
 
-  getMovies(pageNumber: string) {
-    // console.log("getMOvies:", this.baseUrl + pageNumber)
-    return fetch(this.baseUrl + pageNumber, {
+  getMovies(pageNumber: string, url: string) {
+    console.log("url:", url)
+    return fetch(url === "/" ? this.nowPlaying + pageNumber : this.topRated + pageNumber, {
       headers: {
         ...this.headers as {},
       },
@@ -20,7 +24,8 @@ class Api {
 }
 
 export const MoviesApi = new Api({
-  baseUrl: 'https://api.themoviedb.org/3/movie/now_playing?api_key=3046e4e04c3ba6240edd1d3c6eb2d4ad&language=en-US&page=',
+  nowPlaying: 'https://api.themoviedb.org/3/movie/now_playing?api_key=3046e4e04c3ba6240edd1d3c6eb2d4ad&language=en-US&page=',
+  topRated: 'https://api.themoviedb.org/3/movie/top_rated?api_key=3046e4e04c3ba6240edd1d3c6eb2d4ad&language=en-US&page=',
   headers: {
     "Content-Type": "application/json",
   }
