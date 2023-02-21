@@ -1,26 +1,27 @@
 import "./App.scss";
-import { Main } from "../Main/Main";
+import { NowPlayingMoviesCardList } from "../MoviesCardList/NowPlayingMoviesCardList";
+import { TopRatedMoviesCardList } from "../MoviesCardList/TopRatedMoviesCardList";
 import { Header } from "../Header/Header";
-import { NotFoundPage } from "../../NotFoundPage/NotFoundPage";
+import { NotFoundPage } from "../NotFoundPage/NotFoundPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-const mainRouter = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <>
         <Header />
-        <Main url={"/"}/>
+        <NowPlayingMoviesCardList />
       </>
     ),
     errorElement: <NotFoundPage />,
   },
   {
-    path: "/upcoming",
+    path: "/top",
     element: (
       <>
         <Header />
-        <Main url={"/upcoming"}/>
+        <TopRatedMoviesCardList />
       </>
     ),
     errorElement: <NotFoundPage />,
@@ -30,7 +31,7 @@ const mainRouter = createBrowserRouter([
 function App() {
   return (
     <div className="App">
-      <RouterProvider router={mainRouter} />
+      <RouterProvider router={router} />
     </div>
   );
 }

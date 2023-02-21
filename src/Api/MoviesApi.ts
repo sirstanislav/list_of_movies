@@ -3,19 +3,24 @@ class Api {
   topRated: string;
   headers: string;
   pageNumber: string;
-  url: string;
 
-  constructor({ nowPlaying, topRated, headers, pageNumber, url }: any) {
+  constructor({ nowPlaying, topRated, headers, pageNumber }: any) {
     this.nowPlaying = nowPlaying;
     this.topRated = topRated;
     this.headers = headers;
     this.pageNumber = pageNumber;
-    this.url = url
   }
 
-  getMovies(pageNumber: string, url: string) {
-    console.log("url:", url)
-    return fetch(url === "/" ? this.nowPlaying + pageNumber : this.topRated + pageNumber, {
+  getNowPlayingMovies(pageNumber: number) {
+    return fetch(this.nowPlaying + pageNumber, {
+      headers: {
+        ...this.headers as {},
+      },
+    }).then((res) => res.ok ? res.json() : Promise.reject(res.status))
+  }
+
+  getTopRatedMovies(pageNumber: number) {
+    return fetch(this.topRated + pageNumber, {
       headers: {
         ...this.headers as {},
       },

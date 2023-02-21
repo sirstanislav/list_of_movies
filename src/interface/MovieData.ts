@@ -1,6 +1,6 @@
-export type MoviesData = {
+export type MovieData = {
   page?: string,
-  result: ResultOfIMoviesData[]
+  results: ResultOfIMoviesData[]
   dates?: DatesOfIResultOfIMoviesData
   total_pages?: number;
   total_results?: number;

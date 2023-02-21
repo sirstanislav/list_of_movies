@@ -2,11 +2,11 @@ import './MoviesCard.scss'
 import * as React from "react";
 import { Card, Col } from "react-bootstrap";
 
-interface IMoviesCardProps {
+interface INowPlayingMoviesCard {
   movie: any;
 }
 
-const MoviesCard: React.FC<IMoviesCardProps> = ({ movie }) => {
+const NowPlayingMoviesCard: React.FC<INowPlayingMoviesCard> = ({ movie }) => {
   return (
     <Col>
       <Card>
@@ -24,6 +24,4 @@ const MoviesCard: React.FC<IMoviesCardProps> = ({ movie }) => {
   );
 };
 
-// {`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-
-export { MoviesCard };
+export { NowPlayingMoviesCard };
