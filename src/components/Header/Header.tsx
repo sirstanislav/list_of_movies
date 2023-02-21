@@ -14,7 +14,7 @@ const Header: React.FunctionComponent<IHeaderProps> = (props) => {
           <Nav.Link onClick={() => navigate("/")}>Now playing</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={() => navigate("/upcoming")}>Top rated</Nav.Link>
+          <Nav.Link onClick={() => navigate("/top")}>Top rated</Nav.Link>
         </Nav.Item>
       </Nav>
     </div>
