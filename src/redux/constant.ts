@@ -1,3 +1,5 @@
-export const GET_MORE_MOVIES: string = "GET_MORE_MOVIES"
-export const SET_MORE_MOVIES: string = "SET_MORE_MOVIES"
-export const UPCOMING_MOVIES: string = "UPCOMING_MOVIES"
+export const SET_TOP_RATED_MOVIES: string = "SET_TOP_RATED_MOVIES"
+export const SET_UPCOMING_MOVIES: string = "SET_UPCOMING_MOVIES"
+
+export const SET_TOP_RATED_MOVIES_ERROR: string = "SET_TOP_RATED_MOVIES_ERROR"
+export const SET_UPCOMING_MOVIES_ERROR: string = "SET_UPCOMING_MOVIES_ERROR"

@@ -1,55 +1,82 @@
+import { Container, Row, Col } from "react-bootstrap";
 import { useCallback, useEffect, useState } from "react";
-import { TopRatedMoviesCard } from "../MoviesCard/TopRatedMoviesCard";
-import { MoviesApi } from "../../api/MoviesApi";
-import { Button, Container, Row, Col } from "react-bootstrap";
-import { Preloader } from "../Preloader/Preloader";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import topRated from "../../redux/reducers/topRated";
-import { getMoreMovies } from "../../redux/actions/actionCreator";
+import { TopRatedMoviesCard } from "../MoviesCard/TopRatedMoviesCard";
+import { topRatedSliceActions } from "../../redux/reducers/topRatedMoviesReducer";
 
 interface ITopRatedMoviesCardList {}
 
 const TopRatedMoviesCardList: React.FC<ITopRatedMoviesCardList> = (props) => {
   const dispatch = useAppDispatch();
   const [counter, setCounter] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const movieSelector = useAppSelector((state) => state.topRated);
+  const moviesSelector = useAppSelector((state) => state.topRatedSlice);
 
-  const handleLoadMore = useCallback(() => {
+  console.log("movieSelector:", moviesSelector);
+
+  const loadMore = useCallback(() => {
     setCounter((prevCounter) => {
-      dispatch(getMoreMovies(prevCounter));
+      dispatch(
+        topRatedSliceActions.setTopRatedMovies({ counter: prevCounter })
+      );
       return prevCounter + 1;
     });
   }, [dispatch]);
 
-  // const handleUpcoming = () => {
-
-  // }
+  const windowScroll = useCallback(() => {
+    if (
+      window.innerHeight + window.pageYOffset >=
+      document.body.offsetHeight - 2
+    ) {
+      loadMore();
+    }
+  }, [loadMore]);
 
   useEffect(() => {
-    handleLoadMore();
-  }, [handleLoadMore]);
+    window.addEventListener("scroll", windowScroll, false);
+
+    return () => {
+      window.removeEventListener("scroll", windowScroll, false);
+    };
+  }, [windowScroll]);
+
+  useEffect(() => {
+    loadMore();
+  }, [loadMore]);
+
+  if (!moviesSelector.results || moviesSelector.results.length === 0) {
+    return moviesSelector.error ? (
+      <Container className="py-5">
+        <h2
+          className="
+          text-center
+          text-uppercase
+          fw-bold
+          font-monospace
+          text-warning"
+        >
+          {moviesSelector.error}
+        </h2>
+      </Container>
+    ) : null;
+  }
 
   return (
     <Container className="py-5">
       <Row
-        xs={1}
-        md={2}
+        xs={3}
+        md={3}
         lg={5}
         className="g-4"
         style={{ paddingBottom: "100px" }}
       >
-        {movieSelector.result.map((movie: any, index: any) => {
+        {moviesSelector.results.map((movie: any, index: any) => {
           return <TopRatedMoviesCard key={index} movie={movie} />;
         })}
       </Row>
       <Col
         className="d-flex justify-content-center"
         style={{ paddingBottom: "300px" }}
-      >
-        <Button onClick={handleLoadMore}>Load more</Button>
-        {/* <Button onClick={handleUpcoming}>Upcoming</Button> */}
-      </Col>
+      ></Col>
     </Container>
   );
 };
