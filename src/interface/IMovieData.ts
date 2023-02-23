@@ -1,4 +1,4 @@
-export type MovieData = {
+export type IMovieData = {
   page?: string,
   results: ResultOfIMoviesData[]
   dates?: DatesOfIResultOfIMoviesData
