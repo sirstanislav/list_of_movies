@@ -3,14 +3,19 @@ import { NowPlayingMoviesCard } from "../MoviesCard/NowPlayingMoviesCard";
 import { MoviesApi } from "../../api/MoviesApi";
 import { Container, Row } from "react-bootstrap";
 import { Preloader } from "../Preloader/Preloader";
-import { MovieData } from "../../interface/MovieData";
+import { IMovieData } from "../../interface/IMovieData";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { nowPlaying } from "../../redux/reducers/nowPlayingSlice";
 
 interface INowPlayingMoviesCardList {}
 
 const NowPlayingMoviesCardList: React.FC<INowPlayingMoviesCardList> = (
   props
 ) => {
-  const [movies, setMovies] = useState<MovieData>({
+  // const dispatch = useAppDispatch();
+  // const movieSelector = useAppSelector((state) => state.nowPlaying);
+
+  const [movies, setMovies] = useState<IMovieData>({
     page: "",
     results: [],
     dates: {
@@ -28,6 +33,7 @@ const NowPlayingMoviesCardList: React.FC<INowPlayingMoviesCardList> = (
     setCounter((prevCounter) => {
       MoviesApi.getNowPlayingMovies(prevCounter)
         .then((res) => {
+          // dispatch(nowPlaying(res));
           setMovies((prevMovies) => {
             const array = prevMovies.results.concat(res.results);
             return { page: "", results: array };
