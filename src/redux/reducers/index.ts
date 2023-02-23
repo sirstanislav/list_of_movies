@@ -1,10 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import topRated from "./topRated";
-import { upcoming } from "./upcoming";
+import topRatedSlice from "../reducers/topRatedMoviesReducer"
+import upcomingSlice from "../reducers/upcomingMoviesReducer"
 
 const reducer = combineReducers({
-  topRated,
-  upcoming
+  [topRatedSlice.name]: topRatedSlice.reducer,
+  [upcomingSlice.name]: upcomingSlice.reducer,
 })
 
 export default reducer
