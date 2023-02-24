@@ -5,12 +5,12 @@ class Api {
   headers: string;
   pageNumber: string;
 
-  constructor({ nowPlayingMovies, topRatedMovies, upcomingMovies, headers, pageNumber }: any) {
-    this.nowPlayingMovies = nowPlayingMovies;
-    this.topRatedMovies = topRatedMovies;
-    this.upcomingMovies = upcomingMovies;
+  constructor({ headers, pageNumber, upcomingMovies, topRatedMovies, nowPlayingMovies }: any) {
     this.headers = headers;
     this.pageNumber = pageNumber;
+    this.upcomingMovies = upcomingMovies;
+    this.topRatedMovies = topRatedMovies;
+    this.nowPlayingMovies = nowPlayingMovies;
   }
 
   async getNowPlayingMovies(pageNumber: number) {
@@ -33,6 +33,16 @@ class Api {
 
   async getUpcomingMovies(pageNumber: number) {
     const res = await fetch(this.upcomingMovies + pageNumber, {
+      headers: {
+        ...this.headers as {},
+      },
+    });
+    return await (res.ok ? res.json() : Promise.reject(res.status));
+  }
+
+  async getSerchingMovies(value: string, page: number) {
+    console.log("page:", page)
+    const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=3046e4e04c3ba6240edd1d3c6eb2d4ad&language=en-US&query=${value}&page=${page}&include_adult=true`, {
       headers: {
         ...this.headers as {},
       },
