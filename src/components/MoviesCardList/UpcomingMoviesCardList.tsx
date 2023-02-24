@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { TopRatedMoviesCard } from "../MoviesCard/TopRatedMoviesCard";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { upcomingSliceActions } from "../../redux/reducers/upcomingMoviesReducer";
-import upcomingSlice from "../../redux/reducers/upcomingMoviesReducer";
+import { upcomingSliceActions } from "../../redux/slices/upcomingMoviesSlice";
+import upcomingSlice from "../../redux/slices/upcomingMoviesSlice";
 
 interface IUpcomingMoviesCardList {}
 

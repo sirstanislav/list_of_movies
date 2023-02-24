@@ -4,7 +4,7 @@ import { all, put, takeLatest } from 'redux-saga/effects';
 import { MoviesApi } from '../../api/MoviesApi';
 import {
   SET_TOP_RATED_MOVIES,
-  SET_TOP_RATED_MOVIES_ERROR
+  SET_FOUND_MOVIES
 } from "../constant"
 
 type TopRatedState = {
@@ -39,9 +39,12 @@ export const topRatedSliceActions = {
       payload
     }
   },
-  error: () => {
-
-  }
+  setSearchMovies: (payload: { name: string, page: number }) => {
+    return {
+      type: SET_FOUND_MOVIES,
+      payload
+    }
+  },
 }
 
 export function* getTopRatedMovies(action: { type: string, payload: { counter: number } }) {
@@ -55,7 +58,7 @@ export function* getTopRatedMovies(action: { type: string, payload: { counter: n
 
 export function* topRatedSaga() {
   yield all([
-    takeLatest(SET_TOP_RATED_MOVIES, getTopRatedMovies)
+    takeLatest(SET_TOP_RATED_MOVIES, getTopRatedMovies),
   ])
 }
 

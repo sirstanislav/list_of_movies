@@ -2,6 +2,7 @@ import "./App.scss";
 import { NowPlayingMoviesCardList } from "../MoviesCardList/NowPlayingMoviesCardList";
 import { TopRatedMoviesCardList } from "../MoviesCardList/TopRatedMoviesCardList";
 import { UpcomingMoviesCardList } from "../MoviesCardList/UpcomingMoviesCardList";
+import { FoundMoviesCardList } from "../MoviesCardList/FoundMoviesCardList";
 import { Header } from "../Header/Header";
 import { NotFoundPage } from "../NotFoundPage/NotFoundPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -33,6 +34,16 @@ const router = createBrowserRouter([
       <>
         <Header />
         <UpcomingMoviesCardList />
+      </>
+    ),
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "/found",
+    element: (
+      <>
+        <Header />
+        <FoundMoviesCardList />
       </>
     ),
     errorElement: <NotFoundPage />,

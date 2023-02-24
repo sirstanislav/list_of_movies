@@ -1,4 +1,5 @@
 export type IMovieData = {
+  value?: string;
   page?: string,
   results: ResultOfIMoviesData[]
   dates?: DatesOfIResultOfIMoviesData
@@ -6,7 +7,7 @@ export type IMovieData = {
   total_results?: number;
 }
 
-type ResultOfIMoviesData = {
+export type ResultOfIMoviesData = {
   poster_path?: string,
   adult: boolean,
   overview: string,

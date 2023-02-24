@@ -5,7 +5,7 @@ import { Container, Row } from "react-bootstrap";
 import { Preloader } from "../Preloader/Preloader";
 import { IMovieData } from "../../interface/IMovieData";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { nowPlaying } from "../../redux/reducers/nowPlayingSlice";
+import { nowPlaying } from "../../redux/slices/nowPlayingSlice";
 
 interface INowPlayingMoviesCardList {}
 
