@@ -3,27 +3,18 @@ import { NowPlayingMoviesCard } from "../MoviesCard/NowPlayingMoviesCard";
 import { MoviesApi } from "../../api/MoviesApi";
 import { Container, Row } from "react-bootstrap";
 import { Preloader } from "../Preloader/Preloader";
-import { IMovieData } from "../../interface/IMovieData";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { nowPlaying } from "../../redux/slices/nowPlayingSlice";
 
 interface INowPlayingMoviesCardList {}
 
 const NowPlayingMoviesCardList: React.FC<INowPlayingMoviesCardList> = (
   props
 ) => {
-  // const dispatch = useAppDispatch();
-  // const movieSelector = useAppSelector((state) => state.nowPlaying);
+  type IResult = {
+    results: never[];
+  };
 
-  const [movies, setMovies] = useState<IMovieData>({
-    page: "",
+  const [movies, setMovies] = useState<IResult>({
     results: [],
-    dates: {
-      maximum: "",
-      minimum: "",
-    },
-    total_pages: 1,
-    total_results: 1,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [counter, setCounter] = useState(1);
@@ -33,10 +24,9 @@ const NowPlayingMoviesCardList: React.FC<INowPlayingMoviesCardList> = (
     setCounter((prevCounter) => {
       MoviesApi.getNowPlayingMovies(prevCounter)
         .then((res) => {
-          // dispatch(nowPlaying(res));
           setMovies((prevMovies) => {
             const array = prevMovies.results.concat(res.results);
-            return { page: "", results: array };
+            return { results: array };
           });
         })
         .catch((err) => console.log(`Movie download error: ${err}`))
@@ -68,7 +58,7 @@ const NowPlayingMoviesCardList: React.FC<INowPlayingMoviesCardList> = (
   return isLoading ? (
     <Container className="py-5">
       <Row
-        xs={1}
+        xs={2}
         md={2}
         lg={4}
         className="g-4"
@@ -83,7 +73,7 @@ const NowPlayingMoviesCardList: React.FC<INowPlayingMoviesCardList> = (
   ) : (
     <Container className="py-5">
       <Row
-        xs={1}
+        xs={2}
         md={2}
         lg={4}
         className="g-4"

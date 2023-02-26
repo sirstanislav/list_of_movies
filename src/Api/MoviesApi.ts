@@ -3,18 +3,19 @@ class Api {
   topRatedMovies: string;
   upcomingMovies: string;
   headers: string;
-  pageNumber: string;
+  page: string;
 
-  constructor({ headers, pageNumber, upcomingMovies, topRatedMovies, nowPlayingMovies }: any) {
+  constructor({ headers, page, upcomingMovies, topRatedMovies, nowPlayingMovies }: any) {
     this.headers = headers;
-    this.pageNumber = pageNumber;
+    this.page = page;
     this.upcomingMovies = upcomingMovies;
     this.topRatedMovies = topRatedMovies;
     this.nowPlayingMovies = nowPlayingMovies;
   }
 
-  async getNowPlayingMovies(pageNumber: number) {
-    const res = await fetch(this.nowPlayingMovies + pageNumber, {
+  async getNowPlayingMovies(page: number) {
+    console.log("page:", page)
+    const res = await fetch(this.nowPlayingMovies + page, {
       headers: {
         ...this.headers as {},
       },
@@ -22,8 +23,9 @@ class Api {
     return await (res.ok ? res.json() : Promise.reject(res.status));
   }
 
-  async getTopRatedMovies(pageNumber: number) {
-    const res = await fetch(this.topRatedMovies + pageNumber, {
+  async getTopRatedMovies(page: number) {
+    console.log("page:", page)
+    const res = await fetch(this.topRatedMovies + page, {
       headers: {
         ...this.headers as {},
       },
@@ -31,8 +33,9 @@ class Api {
     return await (res.ok ? res.json() : Promise.reject(res.status));
   }
 
-  async getUpcomingMovies(pageNumber: number) {
-    const res = await fetch(this.upcomingMovies + pageNumber, {
+  async getUpcomingMovies(page: number) {
+    console.log("page:", page)
+    const res = await fetch(this.upcomingMovies + page, {
       headers: {
         ...this.headers as {},
       },

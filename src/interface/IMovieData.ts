@@ -1,6 +1,6 @@
 export type IMovieData = {
-  value?: string;
-  page?: string,
+  value: string;
+  page: number,
   results: ResultOfIMoviesData[]
   dates?: DatesOfIResultOfIMoviesData
   total_pages?: number;
