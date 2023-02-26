@@ -17,29 +17,40 @@ interface IHeaderProps {}
 const Header: React.FunctionComponent<IHeaderProps> = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [show, setShow] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [onShowState, setonShowState] = useState("");
+  const [onShowState, setOnShowState] = useState("");
 
   const onSubmit = (value: string) => {
     navigate("/found");
-    dispatch(foundMoviesSliceAction.firstLoad({ value: value, counter: 1 }));
+    dispatch(foundMoviesSliceAction.firstLoad({ value: value }));
   };
 
   return (
-    <div className="header">
+    <div className="header sticky-top">
       {["md"].map((expand) => (
-        <Navbar key={expand} bg="white" expand={expand} className="pt-5">
+        <Navbar
+          key={expand}
+          bg="white"
+          expand={expand}
+          className="pt-5 container"
+        >
           <Container fluid className=" justify-content-end">
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+            <Navbar.Toggle
+              aria-controls={`offcanvasNavbar-expand-${expand}`}
+              onClick={() => setShow(true)}
+            />
             <Navbar.Offcanvas
+              show={show}
               id={`offcanvasNavbar-expand-${expand}`}
               aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
               placement="start"
               onShow={() => {
-                setonShowState("pb-3");
+                setOnShowState("pb-3");
               }}
               onHide={() => {
-                setonShowState("");
+                setOnShowState("");
+                setShow(false);
               }}
             >
               <Offcanvas.Header closeButton>
@@ -47,11 +58,15 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                   Offcanvas
                 </Offcanvas.Title>
               </Offcanvas.Header>
-              <Offcanvas.Body className="justify-content-around">
+              <Offcanvas.Body className="justify-content-between">
                 <Nav className={`gap-3 gap-md-5 ${onShowState}`}>
                   <Nav.Item>
                     <Nav.Link
-                      onClick={() => navigate("/")}
+                      onClick={() => {
+                        navigate("/");
+                        setShow(false);
+                        setInputValue("");
+                      }}
                       className="link-primary"
                     >
                       Now playing
@@ -59,7 +74,11 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link
-                      onClick={() => navigate("/top")}
+                      onClick={() => {
+                        setShow(false);
+                        navigate("/top");
+                        setInputValue("");
+                      }}
                       className="link-primary"
                     >
                       Top rated
@@ -67,7 +86,11 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link
-                      onClick={() => navigate("/upcoming")}
+                      onClick={() => {
+                        setShow(false);
+                        setInputValue("");
+                        navigate("/upcoming");
+                      }}
                       className="link-primary"
                     >
                       Upcoming
@@ -82,16 +105,18 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                       ".form-control"
                     );
                     onSubmit((input as HTMLInputElement).value);
-                  }}
-                  onChange={(e) => {
-                    setInputValue((e.target as HTMLInputElement).value);
+                    setShow(false);
                   }}
                 >
                   <Form.Control
+                    value={inputValue}
                     type="search"
                     placeholder="Search"
                     className="me-2"
                     aria-label="Search"
+                    onChange={(e) => {
+                      setInputValue((e.target as HTMLInputElement).value);
+                    }}
                   />
                   <Button
                     variant="outline-primary"
