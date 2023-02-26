@@ -1,40 +1,50 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { TopRatedMoviesCard } from "../MoviesCard/TopRatedMoviesCard";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { upcomingSliceActions } from "../../redux/slices/upcomingMoviesSlice";
-import upcomingSlice from "../../redux/slices/upcomingMoviesSlice";
 
 interface IUpcomingMoviesCardList {}
 
 const UpcomingMoviesCardList: React.FC<IUpcomingMoviesCardList> = (props) => {
   const dispatch = useAppDispatch();
-  const [counter, setCounter] = useState(1);
-  const movieSelector = useAppSelector((state) => state.upcomingSlice.results);
+  const moviesSelector = useAppSelector((state) => state.upcomingSlice);
 
   const handleLoadMore = useCallback(() => {
-    setCounter((prevCounter) => {
-      dispatch(
-        upcomingSliceActions.setUpcomingMovies({ counter: prevCounter })
-      );
-      return prevCounter + 1;
-    });
+    dispatch(upcomingSliceActions.setUpcomingMovies());
   }, [dispatch]);
 
   useEffect(() => {
     handleLoadMore();
   }, [handleLoadMore]);
 
+  if (!moviesSelector.results || moviesSelector.results.length === 0) {
+    return moviesSelector.error ? (
+      <Container className="py-5">
+        <h2
+          className="
+          text-center
+          text-uppercase
+          fw-bold
+          font-monospace
+          text-warning"
+        >
+          {moviesSelector.error}
+        </h2>
+      </Container>
+    ) : null;
+  }
+
   return (
     <Container className="py-5">
       <Row
-        xs={3}
+        xs={2}
         md={3}
         lg={5}
         className="g-4"
         style={{ paddingBottom: "100px" }}
       >
-        {movieSelector.map((movie: any, index: any) => {
+        {moviesSelector.results.map((movie: any, index: any) => {
           return <TopRatedMoviesCard key={index} movie={movie} />;
         })}
       </Row>

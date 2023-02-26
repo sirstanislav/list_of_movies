@@ -1,4 +1,3 @@
-import { useCallback, useEffect, useState } from "react";
 import { TopRatedMoviesCard } from "../MoviesCard/TopRatedMoviesCard";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -8,28 +7,21 @@ interface IUpcomingMoviesCardList {}
 
 const FoundMoviesCardList: React.FC<IUpcomingMoviesCardList> = (props) => {
   const dispatch = useAppDispatch();
-  const [counter, setCounter] = useState(2);
   const movieSelector = useAppSelector(
     (state) => state.foundMoviesSlice.results
   );
-  const inputValue = useAppSelector((state) => state.foundMoviesSlice.value);
+  const inputValue: string = useAppSelector(
+    (state) => state.foundMoviesSlice.value
+  );
 
   const handleLoadMore = () => {
-    setCounter((prevCounter) => {
-      dispatch(
-        foundMoviesSliceAction.firstLoad({
-          value: inputValue!,
-          counter: prevCounter,
-        })
-      );
-      return prevCounter + 1;
-    });
+    dispatch(foundMoviesSliceAction.addMore({ value: inputValue }));
   };
 
   return (
     <Container className="py-5">
       <Row
-        xs={3}
+        xs={2}
         md={3}
         lg={5}
         className="g-4"

@@ -1,20 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { IMovieData } from '../../interface/IMovieData';
-import { all, put, takeLatest } from 'redux-saga/effects';
+import { all, put, takeLatest, select } from 'redux-saga/effects';
 import { MoviesApi } from '../../api/MoviesApi';
 import {
   SET_TOP_RATED_MOVIES,
-  SET_FOUND_MOVIES
 } from "../constant"
 
 type TopRatedState = {
   results: Array<{}>
   error: string
+  page: number
 }
 
 const initialState: TopRatedState = {
   results: [],
-  error: ''
+  error: '',
+  page: 1,
 }
 
 const topRatedSlice = createSlice({
@@ -23,6 +24,7 @@ const topRatedSlice = createSlice({
   reducers: {
     setStateTopRatedMovies(state = initialState, action: PayloadAction<IMovieData>) {
       state.results = state.results.concat(action.payload.results)
+      state.page = state.page + 1
       return state
     },
     setError(state = initialState, action: PayloadAction<TopRatedState>) {
@@ -33,26 +35,24 @@ const topRatedSlice = createSlice({
 })
 
 export const topRatedSliceActions = {
-  setTopRatedMovies: (payload: { counter: number }) => {
+  setTopRatedMovies: () => {
     return {
       type: SET_TOP_RATED_MOVIES,
-      payload
     }
-  },
-  setSearchMovies: (payload: { name: string, page: number }) => {
-    return {
-      type: SET_FOUND_MOVIES,
-      payload
-    }
-  },
+  }
 }
 
-export function* getTopRatedMovies(action: { type: string, payload: { counter: number } }) {
+export function* getTopRatedMovies(action: { type: string }) {
   try {
-    const data: IMovieData = yield MoviesApi.getTopRatedMovies(action.payload.counter);
+    const page: number = yield select((state) => state.topRatedSlice.page)
+    const data: IMovieData = yield MoviesApi.getTopRatedMovies(page);
     yield put(topRatedSlice.actions.setStateTopRatedMovies(data))
   } catch (error) {
-    yield put(topRatedSlice.actions.setError({ results: [], error: 'Error fetch' }))
+    yield put(topRatedSlice.actions.setError({
+      error: 'Error fetch',
+      results: [],
+      page: 0
+    }))
   }
 }
 
