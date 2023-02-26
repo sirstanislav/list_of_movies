@@ -1,25 +1,17 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { TopRatedMoviesCard } from "../MoviesCard/TopRatedMoviesCard";
-import { topRatedSliceActions } from "../../redux/reducers/topRatedMoviesReducer";
+import { topRatedSliceActions } from "../../redux/slices/topRatedMoviesSlice";
 
 interface ITopRatedMoviesCardList {}
 
 const TopRatedMoviesCardList: React.FC<ITopRatedMoviesCardList> = (props) => {
   const dispatch = useAppDispatch();
-  const [counter, setCounter] = useState(1);
   const moviesSelector = useAppSelector((state) => state.topRatedSlice);
 
-  console.log("movieSelector:", moviesSelector);
-
   const loadMore = useCallback(() => {
-    setCounter((prevCounter) => {
-      dispatch(
-        topRatedSliceActions.setTopRatedMovies({ counter: prevCounter })
-      );
-      return prevCounter + 1;
-    });
+    dispatch(topRatedSliceActions.setTopRatedMovies());
   }, [dispatch]);
 
   const windowScroll = useCallback(() => {
@@ -63,7 +55,7 @@ const TopRatedMoviesCardList: React.FC<ITopRatedMoviesCardList> = (props) => {
   return (
     <Container className="py-5">
       <Row
-        xs={3}
+        xs={2}
         md={3}
         lg={5}
         className="g-4"
