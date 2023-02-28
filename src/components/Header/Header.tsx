@@ -29,13 +29,8 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
   return (
     <div className="header sticky-top">
       {["md"].map((expand) => (
-        <Navbar
-          key={expand}
-          bg="white"
-          expand={expand}
-          className="pt-5 container"
-        >
-          <Container fluid className=" justify-content-end">
+        <Navbar key={expand} bg="white" expand={expand} className="pt-5">
+          <Container className="justify-content-end p-0">
             <Navbar.Toggle
               aria-controls={`offcanvasNavbar-expand-${expand}`}
               onClick={() => setShow(true)}
@@ -59,7 +54,7 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body className="justify-content-between">
-                <Nav className={`gap-3 gap-md-5 ${onShowState}`}>
+                <Nav className={`gap-md-3 gap-lg-5 ${onShowState}`}>
                   <Nav.Item>
                     <Nav.Link
                       onClick={() => {
@@ -94,6 +89,18 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                       className="link-primary"
                     >
                       Upcoming
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link
+                      onClick={() => {
+                        setShow(false);
+                        setInputValue("");
+                        navigate("/excel");
+                      }}
+                      className="link-primary"
+                    >
+                      Excel
                     </Nav.Link>
                   </Nav.Item>
                 </Nav>

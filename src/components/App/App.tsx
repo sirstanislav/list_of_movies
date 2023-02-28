@@ -6,6 +6,7 @@ import { FoundMoviesCardList } from "../MoviesCardList/FoundMoviesCardList";
 import { Header } from "../Header/Header";
 import { NotFoundPage } from "../NotFoundPage/NotFoundPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Excel } from "../Excel/Excel";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,16 @@ const router = createBrowserRouter([
       <>
         <Header />
         <FoundMoviesCardList />
+      </>
+    ),
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "/excel",
+    element: (
+      <>
+        <Header />
+        <Excel />
       </>
     ),
     errorElement: <NotFoundPage />,
