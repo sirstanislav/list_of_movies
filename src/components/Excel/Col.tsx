@@ -1,16 +1,15 @@
+import uuid from "react-uuid";
 import * as React from "react";
+import { useAppDispatch } from "../../hooks";
 import { Form, Button } from "react-bootstrap";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { excelSliceAction } from "../../redux/slices/excelSlice";
 import { IColsType } from "../../redux/slices/excelSlice";
+import { excelSliceAction } from "../../redux/slices/excelSlice";
 
 interface IColProps {
   col: IColsType;
-  index: number;
 }
 
-const Col: React.FC<IColProps> = ({ col, index }) => {
-  console.log("ColValue:", col);
+const Col: React.FC<IColProps> = ({ col }) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -24,7 +23,7 @@ const Col: React.FC<IColProps> = ({ col, index }) => {
             dispatch(
               excelSliceAction.setColTitle({
                 title: e.target.value,
-                id: index + 1,
+                id: col.id,
               })
             );
           }}
@@ -33,7 +32,7 @@ const Col: React.FC<IColProps> = ({ col, index }) => {
           type="button"
           className="px-1 py-0 position-absolute bottom-50 start-100 translate-middle bi bi-plus-square"
           onClick={(e) => {
-            dispatch(excelSliceAction.addCol({ id: index + 2 }));
+            dispatch(excelSliceAction.addCol({ id: uuid() }));
           }}
         ></Button>
       </th>
