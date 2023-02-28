@@ -14,7 +14,6 @@ class Api {
   }
 
   async getNowPlayingMovies(page: number) {
-    console.log("page:", page)
     const res = await fetch(this.nowPlayingMovies + page, {
       headers: {
         ...this.headers as {},
@@ -24,7 +23,6 @@ class Api {
   }
 
   async getTopRatedMovies(page: number) {
-    console.log("page:", page)
     const res = await fetch(this.topRatedMovies + page, {
       headers: {
         ...this.headers as {},
@@ -34,7 +32,6 @@ class Api {
   }
 
   async getUpcomingMovies(page: number) {
-    console.log("page:", page)
     const res = await fetch(this.upcomingMovies + page, {
       headers: {
         ...this.headers as {},
@@ -44,7 +41,6 @@ class Api {
   }
 
   async getSerchingMovies(value: string, page: number) {
-    console.log("page:", page)
     const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=3046e4e04c3ba6240edd1d3c6eb2d4ad&language=en-US&query=${value}&page=${page}&include_adult=true`, {
       headers: {
         ...this.headers as {},
