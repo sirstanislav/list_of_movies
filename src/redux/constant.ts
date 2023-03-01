@@ -8,6 +8,9 @@ export const SET_COL: string = "SET_COL"
 export const SET_ROW: string = "SET_ROW"
 
 export const SET_COL_NAME: string = "SET_COL_NAME"
+
 export const SET_CELL_NAME: string = "SET_CELL_NAME"
+export const SET_CELL_NAME_COMPLETE: string = "SET_CELL_NAME_COMPLETE"
+
 
 

@@ -1,7 +1,14 @@
 import uuid from 'react-uuid';
+import { RootState } from './index';
 import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
-import { all, takeLatest, put, select } from 'redux-saga/effects';
-import { SET_COL, SET_ROW, SET_COL_NAME, SET_CELL_NAME } from '../constant'
+import { all, takeLatest, put, select, debounce, throttle } from 'redux-saga/effects';
+import {
+  SET_COL,
+  SET_ROW,
+  SET_COL_NAME,
+  SET_CELL_NAME,
+  SET_CELL_NAME_COMPLETE
+} from '../constant'
 
 export type IColsType = {
   id: string,
@@ -88,7 +95,6 @@ export const excelSlice = createSlice({
       return state
     },
     setCellTitle(state = initialState, action: PayloadAction<IColsType>) {
-      // const item = state.cells.find(item => item.id === action.payload.id)
       state.rows.forEach((item) => {
         const cell = item.cells.find(item => item.id === action.payload.id)
         if (cell) {
@@ -107,7 +113,7 @@ export const excelSliceAction = {
       payload
     }
   },
-  addRow: (payload: { id: string }): { type: typeof SET_COL, payload: { id: string } } => {
+  addRow: (payload: { id: string }): { type: typeof SET_ROW, payload: { id: string } } => {
     return {
       type: SET_ROW,
       payload
@@ -124,7 +130,7 @@ export const excelSliceAction = {
       type: SET_CELL_NAME,
       payload
     }
-  }
+  },
 }
 
 export function* exelSaga() {
@@ -132,16 +138,16 @@ export function* exelSaga() {
     takeLatest(SET_COL, setCol),
     takeLatest(SET_ROW, setRow),
     takeLatest(SET_COL_NAME, setColTitle),
-    takeLatest(SET_CELL_NAME, setCellTitle)
+    throttle(5000, SET_CELL_NAME, setCellTitle),
   ])
 }
 
 export function* setCol(action: { type: string, payload: { id: string } }) {
-  const rows: number = yield select((state) => state.exelSlice.rows.length)
+  const rows: number = yield select((state: RootState) => state.exelSlice.rows.length)
   yield put(excelSlice.actions.addCol({ ...action.payload, rows }))
 }
 export function* setRow(action: { type: string, payload: { id: string } }) {
-  const cols: number = yield select((state) => state.exelSlice.cols.length)
+  const cols: number = yield select((state: RootState) => state.exelSlice.cols.length)
   yield put(excelSlice.actions.addRow({ ...action.payload, cols }))
 }
 export function* setColTitle(action: { type: string, payload: { title: string, id: string } }) {
@@ -149,7 +155,7 @@ export function* setColTitle(action: { type: string, payload: { title: string, i
 }
 
 export function* setCellTitle(action: { type: string, payload: { title: string, id: string } }) {
-  yield put(excelSlice.actions.setCellTitle({ title: action.payload.title, id: action.payload.id }))
+  yield put(excelSlice.actions.setCellTitle({ title: action.payload.title, id: action.payload.id }));
 }
 
 export default excelSlice

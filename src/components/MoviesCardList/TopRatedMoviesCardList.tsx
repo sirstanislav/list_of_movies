@@ -18,9 +18,8 @@ const TopRatedMoviesCardList: React.FC<ITopRatedMoviesCardList> = (props) => {
     if (
       window.innerHeight + window.pageYOffset >=
       document.body.offsetHeight - 2
-    ) {
+    )
       loadMore();
-    }
   }, [loadMore]);
 
   useEffect(() => {

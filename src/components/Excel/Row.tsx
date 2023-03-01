@@ -1,4 +1,4 @@
-import uuid from 'react-uuid';
+import uuid from "react-uuid";
 import * as React from "react";
 import { Button, Form } from "react-bootstrap";
 import { IRowsType } from "../../redux/slices/excelSlice";
@@ -29,7 +29,7 @@ const Row: React.FunctionComponent<IRowProps> = ({ row, index }) => {
         {row.cells.map((cell) => (
           <td key={cell.id}>
             <Form.Control
-              value={cell.title}
+              // value={cell.title}
               as="textarea"
               className="input__cell_light-gray overflow-auto"
               onChange={(e) => {

@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
 import { rootSaga } from './sagas/rootSaga'
-import reducer from "./slices/index"
+import rootReducer from "./slices/index"
 
 // Create the saga middleware
 const sagaMiddleware = createSagaMiddleware()
 const middleware = [sagaMiddleware]
 // Mount it on the Store
 export const store = configureStore({
-  reducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(middleware),
 })
