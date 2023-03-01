@@ -1,3 +1,4 @@
+import uuid from 'react-uuid';
 import * as React from "react";
 import { Button, Form } from "react-bootstrap";
 import { IRowsType } from "../../redux/slices/excelSlice";
@@ -12,9 +13,6 @@ interface IRowProps {
 const Row: React.FunctionComponent<IRowProps> = ({ row, index }) => {
   const dispatch = useAppDispatch();
 
-  // const cellsArray = useAppSelector((state) => state.exelSlice.rows);
-  // const rowsArray = useAppSelector((state) => state.exelSlice.rows);
-
   return (
     <>
       <tr>
@@ -24,12 +22,12 @@ const Row: React.FunctionComponent<IRowProps> = ({ row, index }) => {
             type="button"
             className="px-1 py-0 position-absolute end-100 bi bi-plus-square button__cell"
             onClick={(e) => {
-              dispatch(excelSliceAction.addRow({ id: index + 2 }));
+              dispatch(excelSliceAction.addRow({ id: uuid() }));
             }}
           ></Button>
         </td>
-        {row.cells.map((cell, index) => (
-          <td key={index}>
+        {row.cells.map((cell) => (
+          <td key={cell.id}>
             <Form.Control
               value={cell.title}
               as="textarea"
