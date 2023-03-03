@@ -29,7 +29,7 @@ const Row: React.FunctionComponent<IRowProps> = ({ row, index }) => {
         {row.cells.map((cell) => (
           <td key={cell.id}>
             <Form.Control
-              // value={cell.title}
+              defaultValue={cell.title}
               as="textarea"
               className="input__cell_light-gray overflow-auto"
               onChange={(e) => {

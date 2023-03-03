@@ -138,7 +138,7 @@ export function* exelSaga() {
     takeLatest(SET_COL, setCol),
     takeLatest(SET_ROW, setRow),
     takeLatest(SET_COL_NAME, setColTitle),
-    throttle(5000, SET_CELL_NAME, setCellTitle),
+    debounce(500, SET_CELL_NAME, setCellTitle),
   ])
 }
 
